@@ -1,4 +1,29 @@
 {
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src"
+  "sourceRoot": "src",
+  "compilerOptions": {
+    "deleteOutDir": true
+  },
+  "projects": {
+    "aws": {
+      "type": "application",
+      "root": "./",
+      "entryFile": "lambda",
+      "sourceRoot": "src",
+      "compilerOptions": {
+        "tsConfigPath": "./tsconfig.build.json",
+        "webpack": true,
+        "webpackConfigPath": "webpack.config.js"
+      }
+    },
+    "rest": {
+      "type": "application",
+      "root": "./",
+      "entryFile": "main",
+      "sourceRoot": "src",
+      "compilerOptions": {
+        "tsConfigPath": "./tsconfig.build.json"
+      }
+    }
+  }
 }
