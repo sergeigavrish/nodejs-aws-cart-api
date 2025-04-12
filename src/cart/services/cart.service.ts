@@ -2,16 +2,17 @@ import { Injectable } from '@nestjs/common';
 import { randomUUID } from 'node:crypto';
 import { Cart, CartStatuses } from '../models';
 import { PutCartPayload } from 'src/order/type';
+import { ICartService } from './icart.service';
 
 @Injectable()
-export class CartService {
+export class CartService implements ICartService {
   private userCarts: Record<string, Cart> = {};
 
-  findByUserId(userId: string): Cart {
-    return this.userCarts[userId];
+  async findByUserId(userId: string): Promise<Cart | null> {
+    return this.userCarts[userId] || null;
   }
 
-  createByUserId(user_id: string): Cart {
+  async createByUserId(user_id: string): Promise<Cart> {
     const timestamp = Date.now();
 
     const userCart = {
@@ -28,7 +29,7 @@ export class CartService {
     return userCart;
   }
 
-  findOrCreateByUserId(userId: string): Cart {
+  async findOrCreateByUserId(userId: string): Promise<Cart> {
     const userCart = this.findByUserId(userId);
 
     if (userCart) {
@@ -38,8 +39,8 @@ export class CartService {
     return this.createByUserId(userId);
   }
 
-  updateByUserId(userId: string, payload: PutCartPayload): Cart {
-    const userCart = this.findOrCreateByUserId(userId);
+  async updateByUserId(userId: string, payload: PutCartPayload): Promise<Cart> {
+    const userCart = await this.findOrCreateByUserId(userId);
 
     const index = userCart.items.findIndex(
       ({ product }) => product.id === payload.product.id,
@@ -56,7 +57,7 @@ export class CartService {
     return userCart;
   }
 
-  removeByUserId(userId): void {
+  async removeByUserId(userId): Promise<void> {
     this.userCarts[userId] = null;
   }
 }
