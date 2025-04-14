@@ -33,3 +33,6 @@ get-token.sh
 
 # Exclude sql files
 /sql
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
