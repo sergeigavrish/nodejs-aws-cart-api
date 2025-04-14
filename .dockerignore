@@ -1,0 +1,35 @@
+# Exclude git
+.git
+.gitignore
+
+# Exclude node_modules directory
+node_modules
+
+# Exclude build directories
+/dist
+
+#Exclude test files
+/test
+*.spec.ts
+
+# Exclude environment files
+.env
+.env*
+env.example
+
+# Exclude Docker-related files
+Dockerfile*
+.dockerignore
+
+# Exclude scripts
+get-token.sh
+
+# Exclude lint and format files
+.eslintrc.js
+.prettierrc
+
+# Exclude *md files
+*.md
+
+# Exclude sql files
+/sql
